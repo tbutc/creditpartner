@@ -24,8 +24,4 @@ public class Member {
     @Column(name = "PWD") // 컬럼명 지정
     private String pwd;
 
-    @Column(name = "PWD_CONFIRM") // 컬럼명 지정
-    private String pwdConfirm;
-
-
 }

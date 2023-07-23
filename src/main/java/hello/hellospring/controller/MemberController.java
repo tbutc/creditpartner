@@ -1,12 +1,15 @@
 package hello.hellospring.controller;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.dto.MemberJoinDTO;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.service.MemberService;
 import hello.hellospring.session.SessionConst;
 import hello.hellospring.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -32,19 +35,36 @@ public class MemberController {
         return "members/createMemberForm";
     }   //문제
 
-    @PostMapping("/join")
-    public String create(MemberForm form) {
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setId(form.getId());
-        member.setPwd(form.getPwd());
-        member.setPwdConfirm(form.getPwdConfirm());
+//    @PostMapping("/join")
+//    public String create(MemberForm form) {
+//        Member member = new Member();
+//        member.setName(form.getName());
+//        member.setId(form.getId());
+//        member.setPwd(form.getPwd());
+//        member.setPwdConfirm(form.getPwdConfirm());
+//
+//        memberService.join(member);
+//
+//        return "redirect:/";    //문제
+//    }
 
+    @PostMapping(value = "api/join", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> create(@RequestBody MemberJoinDTO memberJoinDTO) {
+        // 회원가입 로직 수행
+        String name = memberJoinDTO.getName();
+        String id = memberJoinDTO.getId();
+        String password = memberJoinDTO.getPwd();
+
+        Member member = new Member();
+
+        member.setPwd(password);
+        member.setId(id);
+        member.setName(name);
         memberService.join(member);
 
-        return "redirect:/";    //문제
+        String responseMessage = "회원가입이 성공적으로 완료되었습니다.";
+        return ResponseEntity.ok(responseMessage);
     }
-
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm form) {

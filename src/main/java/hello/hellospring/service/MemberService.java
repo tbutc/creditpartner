@@ -26,42 +26,18 @@ public class MemberService {
     }
 
     private void validateDuplicateMember(Member member) {
-        memberRepository.findByName(member.getName())
+        memberRepository.findById(member.getId())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
 
-//    public Member login(String id, String pwd) {
-//        return memberRepository.findById(id)
-//                .filter(m -> m.getPwd().equals(pwd))
-//                .orElse(null);
-//    }
     public Optional<Member> login(String id, String pwd) {
         return memberRepository.findById(id)
                 .filter(m -> m.getPwd().equals(pwd));
     }
-//    public Optional<Member> login(String id, String pwd) {
-//        Optional<Member> found_member = memberRepository.findById(id);
-//
-//        if(found_member==null){
-//            return null;
-//        }
-//
-//        else
-//            return found_member;
-//    }
 
-//    private final MemberRepository memberRepository;
-//
-//    /**
-//     * @return null 로그인 실패
-//     */
-//    public Member login(String loginId, String password) {
-//        return memberRepository.findByLoginId(loginId)
-//                .filter(m -> m.getPassword().equals(password))
-//                .orElse(null);
-//    }
+
     /**
      * 전체 회원 조회
      */
