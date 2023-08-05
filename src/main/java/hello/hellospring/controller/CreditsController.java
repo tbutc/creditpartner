@@ -4,15 +4,16 @@ import hello.hellospring.domain.Classes;
 import hello.hellospring.domain.Credit;
 import hello.hellospring.domain.Member;
 import hello.hellospring.domain.Subject;
+import hello.hellospring.dto.CreditEditDTO;
+import hello.hellospring.dto.MemberJoinDTO;
 import hello.hellospring.service.CreditsService;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +21,51 @@ import java.util.List;
 @Controller
 public class CreditsController {
 
+    private final CreditsService creditsService;
+
+    @PostMapping(value = "api/credits/{semester}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> creditEdit(@PathVariable int semester, @RequestBody CreditEditDTO creditEditDTO) {
+
+        //프론트에서 받은 JSON DTO를 각각의 변수에 저장
+        String class_name = creditEditDTO.getClass_name();
+        int credit = creditEditDTO.getCredit();
+        String id = creditEditDTO.getId();
+        String subject = creditEditDTO.getSubject();
+
+
+        //Credit object를 만든 뒤, Credit Object attribute에 하나씩 저장
+        Credit credit_obj = new Credit();
+
+        int cid = creditsService.find_cid(class_name); //String class_name으로 int cid 검색
+        credit_obj.setCid(cid);
+
+        int sid = creditsService.find_sid(subject); //String subject로 int sid 검색
+        credit_obj.setSid(sid);
+        
+        credit_obj.setCredit(credit);
+        credit_obj.setSemester(semester); //바꿔야함!!!!!!!
+        //Object attribute 저장 끝
+        
+        creditsService.credit_edit(credit_obj);
+        
+        String responseMessage = "이수내역 입력이 성공적으로 완료되었습니다.";
+        return ResponseEntity.ok(responseMessage);
+    }
+
+
+
     @PostMapping("/credits")
     public String showSemesterForm(@RequestParam("dropdown") String semester) {
         int convertedSemester = convertSemester(semester);
         return "redirect:/credits/"+convertedSemester;
     }
-    private final CreditsService creditsService;
+//    private final CreditsService creditsService;
     @Autowired
     public CreditsController(CreditsService creditsService) {
         this.creditsService = creditsService;
     }
 
-    @GetMapping("/credits/{semester}") //이수내역 입력하기 페이지 출력
+    @GetMapping("credits/{semester}") //이수내역 입력하기 페이지 출력
     public String showSemesterData(@PathVariable int semester, Model model) { //변수 -> semester : url에서 받아옴
 
         List<String> dropdownOptions = getDropdownOptions_semester();

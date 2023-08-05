@@ -30,6 +30,13 @@ public class creditsRepository {
         this.dataSource = dataSource;
     }
 
+
+    public void credits_edit(Credit credit_object){
+
+
+
+    }
+
     public List<Credit> find(int semester) {
         String sql = "SELECT class_id, credit FROM class_list WHERE semester = ? AND member_id = ?";
         Connection conn = null;
@@ -75,6 +82,67 @@ public class creditsRepository {
                 classes.add(classes1);
             }
             return classes;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    public void credits_edits(Credit credit_object){
+        String sql = "insert into class_list values(?, ?, ?, ?) cid FROM class WHERE name = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, 1);
+            pstmt.setString(2, "12");
+            pstmt.setInt(3, credit_object.getCid());
+            pstmt.setInt(4, credit_object.getCredit());
+            rs = pstmt.executeQuery();
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    public int find_cid_by_name(String name) {
+        String sql = "SELECT cid FROM class WHERE name = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            rs = pstmt.executeQuery();
+
+            return rs.getInt("cid");
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    public int find_sid_by_name(String name) {
+        String sql = "SELECT sid FROM subject WHERE name = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            rs = pstmt.executeQuery();
+
+            return rs.getInt("sid");
+
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
@@ -141,3 +209,4 @@ public class creditsRepository {
         DataSourceUtils.releaseConnection(conn, dataSource);
     }
 }
+

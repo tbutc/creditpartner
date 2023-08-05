@@ -28,10 +28,12 @@ create table class
 
 create table class_list
 (
+    pid int,
     semester int,
     member_id varchar(255),
     class_id int,
     credit int,
+    primary key(pid),
     foreign key(class_id) references class(cid),
     foreign key(member_id) references member(id)
 );

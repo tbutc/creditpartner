@@ -25,4 +25,12 @@ public class CreditsService {
     public List<Subject> showAll_subject(int sid){
         return creditsRepository.find_subject((sid));
     }
+
+    public int find_sid(String name) {return creditsRepository.find_sid_by_name(name);}
+
+    public int find_cid(String name) {return creditsRepository.find_cid_by_name(name);}
+
+    public void credit_edit(Credit credit_object){
+        creditsRepository.credits_edits(credit_object);
+    }
 }

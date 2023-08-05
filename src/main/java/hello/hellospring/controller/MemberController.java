@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 @CrossOrigin(origins = "http://localhost:3000") //CORS ERROR 해결
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class MemberController {
 
     private final MemberService memberService;
