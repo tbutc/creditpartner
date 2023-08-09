@@ -61,7 +61,7 @@ public class CreditsController {
             credit_obj.setCredit(credits.get(i));
             credit_obj.setSemester(semester);
 
-            creditsService.credit_edit(credit_obj);
+            creditsService.credit_edit(semester, credit_obj);
 
         }
 

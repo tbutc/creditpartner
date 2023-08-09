@@ -89,9 +89,9 @@ public class creditsRepository {
         }
     }
 
-    public void credits_edits(Credit credit_object){
+    public void credits_edits(int semester, Credit credit_object){
 //        String sql = "insert into class_list values(?, 1, 12, ?, ?)";
-        String sql = "INSERT INTO class_list (semester, member_id, class_id, credit) VALUES (1, '12', ?, ?)";
+        String sql = "INSERT INTO class_list (semester, member_id, class_id, credit) VALUES (?, '12', ?, ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -101,8 +101,9 @@ public class creditsRepository {
 //            pstmt.setInt(1, 1);
 //            pstmt.setString(2, "12");
 //            pstmt.setLong(1, credit_object.getPid());
-            pstmt.setInt(1, credit_object.getCid());
-            pstmt.setInt(2, credit_object.getCredit());
+            pstmt.setInt(1, semester);
+            pstmt.setInt(2, credit_object.getCid());
+            pstmt.setInt(3, credit_object.getCredit());
             pstmt.executeUpdate();
 
         } catch (Exception e) {
