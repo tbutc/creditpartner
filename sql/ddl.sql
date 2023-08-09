@@ -4,7 +4,7 @@ create table member
     id varchar(255),
     name varchar(255),
     pwd varchar(255),
-    primary key (id)
+    pid long PRIMARY KEY AUTO_INCREMENT
 );
 
 create table subject
