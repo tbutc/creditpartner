@@ -1,11 +1,10 @@
 package hello.hellospring.dto;
 
-
 public class CreditEditDTO {
 
     public CreditEditDTO(){} //기본 생성자
 
-    public CreditEditDTO(String class_name, int credit, String id, String subject){
+    public CreditEditDTO(String id, String class_name, int credit,String subject){
         this.class_name=class_name;
         this.credit=credit;
         this.id=id;

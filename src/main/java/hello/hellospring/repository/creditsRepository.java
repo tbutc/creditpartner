@@ -37,7 +37,7 @@ public class creditsRepository {
 
     }
 
-    public List<Credit> find(int semester) {
+    public List<Credit> find(int semester, String id) {
         String sql = "SELECT class_id, credit FROM class_list WHERE semester = ? AND member_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -46,7 +46,7 @@ public class creditsRepository {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, semester);
-            pstmt.setInt(2, 12);
+            pstmt.setString(2, id);
             rs = pstmt.executeQuery();
             List<Credit> credits = new ArrayList<>();
             while (rs.next()) {
@@ -90,18 +90,20 @@ public class creditsRepository {
     }
 
     public void credits_edits(Credit credit_object){
-        String sql = "insert into class_list values(?, ?, ?, ?) cid FROM class WHERE name = ?";
+//        String sql = "insert into class_list values(?, 1, 12, ?, ?)";
+        String sql = "INSERT INTO class_list (semester, member_id, class_id, credit) VALUES (1, '12', ?, ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, 1);
-            pstmt.setString(2, "12");
-            pstmt.setInt(3, credit_object.getCid());
-            pstmt.setInt(4, credit_object.getCredit());
-            rs = pstmt.executeQuery();
+//            pstmt.setInt(1, 1);
+//            pstmt.setString(2, "12");
+//            pstmt.setLong(1, credit_object.getPid());
+            pstmt.setInt(1, credit_object.getCid());
+            pstmt.setInt(2, credit_object.getCredit());
+            pstmt.executeUpdate();
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -121,7 +123,13 @@ public class creditsRepository {
             pstmt.setString(1, name);
             rs = pstmt.executeQuery();
 
-            return rs.getInt("cid");
+            if (rs.next()) {
+                int cid = rs.getInt("cid");
+                return cid;
+            } else {
+                // 적절한 처리 (데이터가 없을 때의 예외 처리 등)를 수행하세요.
+                throw new IllegalStateException("No data found for the given name");
+            }
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -141,7 +149,13 @@ public class creditsRepository {
             pstmt.setString(1, name);
             rs = pstmt.executeQuery();
 
-            return rs.getInt("sid");
+            if (rs.next()) {
+                int sid = rs.getInt("sid");
+                return sid;
+            } else {
+                // 적절한 처리 (데이터가 없을 때의 예외 처리 등)를 수행하세요.
+                throw new IllegalStateException("No data found for the given name");
+            }
 
         } catch (Exception e) {
             throw new IllegalStateException(e);

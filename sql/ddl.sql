@@ -6,8 +6,6 @@ create table member
     pwd varchar(255),
     primary key (id)
 );
-<<<<<<< HEAD
-=======
 
 create table subject
 (
@@ -28,13 +26,12 @@ create table class
 
 create table class_list
 (
-    pid int,
+    pid long PRIMARY KEY AUTO_INCREMENT,
     semester int,
     member_id varchar(255),
     class_id int,
     credit int,
-    primary key(pid),
     foreign key(class_id) references class(cid),
     foreign key(member_id) references member(id)
 );
->>>>>>> 4ba319f14ea5383ae281f1f13567f616661956b3
+

@@ -16,8 +16,8 @@ public class CreditsService {
     public CreditsService(hello.hellospring.repository.creditsRepository creditsRepository) {
         this.creditsRepository = creditsRepository;
     }
-    public List<Credit> showAll(int semester) {
-        return creditsRepository.find(semester);
+    public List<Credit> showAll(int semester, String id){
+        return creditsRepository.find(semester, id);
     }
     public List<Classes> showAll_class(int cid){
         return creditsRepository.find_class((cid));
