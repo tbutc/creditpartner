@@ -89,6 +89,23 @@ public class creditsRepository {
         }
     }
 
+    public void credits_delete(int semester){
+        String sql = "DELETE FROM class_list WHERE member_id = '12' AND SEMESTER = ?";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, semester);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
     public void credits_edits(int semester, Credit credit_object){
 //        String sql = "insert into class_list values(?, 1, 12, ?, ?)";
         String sql = "INSERT INTO class_list (semester, member_id, class_id, credit) VALUES (?, '12', ?, ?)";

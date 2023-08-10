@@ -33,4 +33,8 @@ public class CreditsService {
     public void credit_edit(int semester, Credit credit_object){
         creditsRepository.credits_edits(semester, credit_object);
     }
+
+    public void credit_delete(int semester){
+        creditsRepository.credits_delete(semester);;
+    }
 }

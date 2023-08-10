@@ -48,6 +48,8 @@ public class CreditsController {
             subjects.add(crediteditDTO.getSubject());
         }
 
+        creditsService.credit_delete(semester);
+
         for (int i = 0; i < creditList.size(); i++) {
             //Credit object를 만든 뒤, Credit Object attribute에 하나씩 저장
             Credit credit_obj = new Credit();
@@ -85,7 +87,6 @@ public class CreditsController {
         List<Credit> credit_list = creditsService.showAll(sem, id);
 
         //credits = class_list 테이블에서 데이터 받아옴
-
         for (Credit credit : credit_list) { //classNames, subjects 이름 받아오는 반복문
             int cid = credit.getCid();
             List<Classes> data = creditsService.showAll_class(cid);
