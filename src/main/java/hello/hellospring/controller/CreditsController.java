@@ -6,7 +6,6 @@ import hello.hellospring.domain.Credit;
 import hello.hellospring.domain.Member;
 import hello.hellospring.domain.Subject;
 import hello.hellospring.dto.CreditEditDTO;
-import hello.hellospring.dto.CreditListDTO;
 import hello.hellospring.dto.MemberJoinDTO;
 import hello.hellospring.service.CreditsService;
 import hello.hellospring.service.MemberService;
