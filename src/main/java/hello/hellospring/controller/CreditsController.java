@@ -28,10 +28,6 @@ public class CreditsController {
 
     private final CreditsService creditsService;
 
-//    @ResponseBody
-//    @RequestMapping(value = "api/credits/{semester}")
-//    public ResponseEntity<String> creditEdit(@PathVariable int semester, @RequestBody List<CreditEditDTO> creditList) {
-
     @ResponseBody
     @RequestMapping(value = "/api/credits/{semester}")
     public ResponseEntity<String> creditEdit(@PathVariable int semester, @RequestBody List<CreditEditDTO> creditList) {
@@ -64,9 +60,7 @@ public class CreditsController {
             credit_obj.setSemester(semester);
 
             creditsService.credit_edit(semester, credit_obj);
-
         }
-
         return ResponseEntity.ok("Successfully processed credit data");
     }
 
@@ -101,9 +95,7 @@ public class CreditsController {
             creditList.add(creditDto);
             
         }
-
         return creditList;
-
     }
 
     @Autowired
@@ -127,16 +119,16 @@ public class CreditsController {
 //    }
 
     // 드롭다운 데이터를 가져오는 메소드 (국어, 수학, 영어, ...)
-    private List<String> getDropdownOptions_subject(){
-        List<String> dropdownOptions = new ArrayList<>();
-        List<Subject> subjects = creditsService.showAll_subject(-1);
-
-        for(Subject subject : subjects){
-            dropdownOptions.add(subject.getName());
-        }
-
-        return dropdownOptions;
-    }
+//    private List<String> getDropdownOptions_subject(){
+//        List<String> dropdownOptions = new ArrayList<>();
+//        List<Subject> subjects = creditsService.showAll_subject(-1);
+//
+//        for(Subject subject : subjects){
+//            dropdownOptions.add(subject.getName());
+//        }
+//
+//        return dropdownOptions;
+//    }
 
 //    private List<String> getDropdownOptions_class(){
 //        List<String> dropdownOptions = new ArrayList<>();
@@ -149,22 +141,22 @@ public class CreditsController {
 //        return dropdownOptions;
 //    }
 
-    private int convertSemester(String semester) {
-        switch (semester) {
-            case "1학년 1학기":
-                return 1;
-            case "1학년 2학기":
-                return 2;
-            case "2학년 1학기":
-                return 3;
-            case "2학년 2학기":
-                return 4;
-            case "3학년 1학기":
-                return 5;
-            case "3학년 2학기":
-                return 6;
-            default:
-                throw new IllegalArgumentException("Invalid semester: " + semester);
-        }
-    }
+//    private int convertSemester(String semester) {
+//        switch (semester) {
+//            case "1학년 1학기":
+//                return 1;
+//            case "1학년 2학기":
+//                return 2;
+//            case "2학년 1학기":
+//                return 3;
+//            case "2학년 2학기":
+//                return 4;
+//            case "3학년 1학기":
+//                return 5;
+//            case "3학년 2학기":
+//                return 6;
+//            default:
+//                throw new IllegalArgumentException("Invalid semester: " + semester);
+//        }
+//    }
 }
